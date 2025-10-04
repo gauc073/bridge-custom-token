@@ -424,6 +424,7 @@ contract NttManager is INttManager, RateLimiter, ManagerBase {
                     // Since there is no standard way to query for burn fee amounts with burnable tokens,
                     // and NTT would be used on a per-token basis, implementing this functionality
                     // is left to integrating projects who may need to account for burn fees on their tokens.
+                    IERC20(token).approve(address(token), amount);
                     ICustomToken(token).burn(address(this),amount);
                     // ERC20Burnable(token).burn(address(this),amount);
 
