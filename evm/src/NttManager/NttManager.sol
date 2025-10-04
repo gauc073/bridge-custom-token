@@ -12,6 +12,7 @@ import "../libraries/RateLimiter.sol";
 import "../interfaces/INttManager.sol";
 import "../interfaces/INttToken.sol";
 import "../interfaces/ITransceiver.sol";
+import "../interfaces/ICustomToken.sol";
 
 import {ManagerBase} from "./ManagerBase.sol";
 
@@ -423,7 +424,8 @@ contract NttManager is INttManager, RateLimiter, ManagerBase {
                     // Since there is no standard way to query for burn fee amounts with burnable tokens,
                     // and NTT would be used on a per-token basis, implementing this functionality
                     // is left to integrating projects who may need to account for burn fees on their tokens.
-                    ERC20Burnable(token).burn(amount);
+                    ICustomToken(token).burn(address(this),amount);
+                    // ERC20Burnable(token).burn(address(this),amount);
 
                     // tokens held by the contract after the operation should be the same as before
                     uint256 balanceAfterBurn = _getTokenBalanceOf(token, address(this));
